@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Portfolio</title>
+</head>
+
+<body>
+  <div class="container">
+    <section class="section hero">
+      <div class="hero__text">
+        <h1>Real’s <span>Portfolio</span></h1>
+        <p>Explore my real-time investment portfolio to make informed decisions and enhance your own investment strategy
+        </p>
+      </div>
+      <div class="hero__chart">
+        <canvas id="hero-chart"></canvas>
+        <div id="hover">Bitcoin</div>
+      </div>
+    </section>
+    <section class="section performance">
+      <div class="text">
+        <p>Top Performing coins</p>
+      </div>
+      <div class="coins">
+      </div>
+    </section>
+    <section class="section portfolio">
+      <h1>Detailed breakdown</h1>
+      <div class="table-heading">
+        <div>Coin</div>
+        <div>Percent. of portfolio</div>
+        <div>Profit/Loss</div>
+      </div>
+      <div id="portfolio" class="list-container">
+      </div>
+    </section>
+  </div>
+
+  <script src="js/charts.min.js"></script>
+  <!-- <script src="js/data.js"></script> -->
+  <script src="js/app.v2.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,345 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+:root {
+  font-size: 16px;
+  --GTC: 1fr 300px 200px;
+  --GTC-S: 1fr 200px 100px;
+  --GTC-XS: 1fr 140px 80px;
+}
+
+body {
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+.section {
+  margin: 5em 0;
+  padding: 0 10em;
+}
+
+.section.hero {
+  display: flex;
+  justify-content: space-between;
+}
+
+.section.hero .hero__text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.section.hero .hero__text h1 {
+  font-weight: 400;
+  font-size: 4.5rem;
+  line-height: 87.77px;
+  margin-bottom: 2rem;
+}
+
+.section.hero .hero__text h1 span {
+  font-weight: 700;
+  display: inline-block;
+  background: linear-gradient(90deg, #f3911a, #2f40f3);
+  background-clip: text;
+  color: transparent;
+  fill: transparent;
+}
+
+.section.hero .hero__text p {
+  font-weight: 400;
+  font-size: 1.25rem;
+  line-height: 22px;
+  color: #666666;
+  max-width: 550px;
+}
+
+.section.hero .hero__chart {
+  display: flex;
+  position: relative;
+}
+
+.section.hero .hero__chart canvas {
+  width: 500px;
+}
+
+.section.hero .hero__chart #hover {
+  display: none;
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, calc(-50% + 10px));
+  background-color: rgba(162, 111, 249, 0.5);
+  border-radius: 15px;
+  padding: 5px 10px;
+  font-family: "Poppins";
+  font-weight: 500;
+  font-size: 20px;
+  color: #ffffff;
+}
+
+.section.hero .hero__chart #hover.show {
+  display: block;
+}
+
+.section.portfolio h1 {
+  font-size: 3rem;
+  line-height: 53.64px;
+  margin-bottom: 0.8em;
+}
+
+.table-heading {
+  color: #666666;
+  padding: 1rem 8rem 1rem 6rem;
+  display: grid;
+  grid-template-columns: var(--GTC);
+  column-gap: 2em;
+}
+
+.table-heading div {
+  font-size: 1.5rem;
+  line-height: 36px;
+}
+
+.list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.list-container details {
+  border-radius: 20px;
+  padding: 1rem 8rem 1rem 6rem;
+}
+
+.list-container details > summary {
+  list-style: none;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: var(--GTC);
+  column-gap: 2em;
+  color: #404040;
+  font-family: "Poppins", sans-serif;
+  position: relative;
+}
+
+.list-container details > summary::after {
+  content: "+";
+  display: block;
+  position: absolute;
+  right: -2em;
+  top: 50%;
+  transform: translateY(-50%) rotateZ(0);
+  transform-origin: center;
+  transition: transform 300ms;
+  font-size: 2rem;
+}
+
+.list-container details[open] > summary::after {
+  transform: translateY(-50%) rotateZ(135deg);
+}
+
+.list-container details > summary .info {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.list-container details > summary .info img {
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+
+.list-container details > summary .info h2 {
+  display: inline-block;
+  font-size: 1.5rem;
+  line-height: 36px;
+}
+
+.list-container details > summary .amt,
+.list-container details > summary .value {
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 29px;
+  align-self: center;
+}
+
+.list-container details > summary .pl {
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 29px;
+  align-self: center;
+  color: #1af372;
+}
+
+.list-container details > summary .pl.loss {
+  color: #ff5f49;
+}
+
+.list-container details > .charts-container {
+  margin-top: 1.5em;
+  width: 100%;
+  /* height: 300px; */
+}
+
+.list-container details > .charts-container canvas {
+  background-color: #ffffff;
+  /* padding: 1em; */
+  border-radius: 8px;
+}
+
+.section.performance {
+  display: flex;
+  justify-content: space-between;
+}
+
+.section.performance .text {
+  font-size: 1.125rem;
+  font-weight: 400;
+}
+
+.section.performance .coins {
+  display: flex;
+  gap: 1em;
+}
+
+.section.performance .coins .coin {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  font-size: 12px;
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+}
+
+@media screen and (max-width: 1322px) {
+  .section.hero {
+    display: block;
+  }
+
+  .section.hero .hero__text p {
+    max-width: none;
+  }
+
+  .section.hero .hero__chart {
+    justify-content: center;
+  }
+
+  .section.performance {
+    display: block;
+  }
+
+  .section.performance .text {
+    margin-bottom: 1em;
+  }
+
+  .table-heading {
+    grid-template-columns: var(--GTC-S);
+    padding: 1rem 6rem 1rem 4rem;
+  }
+
+  .table-heading div {
+    font-size: 1.25rem;
+  }
+
+  .list-container details {
+    padding: 1rem 6rem 1rem 4rem;
+  }
+
+  .list-container details > summary {
+    grid-template-columns: var(--GTC-S);
+  }
+
+  .list-container details > summary .info h2 {
+    font-size: 1.25rem;
+  }
+
+  .list-container details > summary .pl {
+    font-size: 1.25rem;
+  }
+}
+
+@media screen and (max-width: 1020px) {
+  .section {
+    margin: 3em 0;
+    padding: 0 5em;
+  }
+
+  .section.hero .hero__text {
+    margin-bottom: 3em;
+  }
+
+  .section.hero .hero__text h1 {
+    font-size: 3rem;
+  }
+
+  .section.hero .hero__text p {
+    font-size: 1rem;
+  }
+
+  .section.performance .coins {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 40px);
+  }
+
+  .section.portfolio h1 {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 844px) {
+  .section {
+    padding: 0 2em;
+  }
+
+  .section.hero .hero__text h1 {
+    line-height: 40px;
+  }
+
+  .section.portfolio h1 {
+    font-size: 1.25rem;
+    line-height: 30px;
+  }
+
+  .table-heading {
+    padding: 0.5rem 3rem 0.5rem 1rem;
+    grid-template-columns: var(--GTC-XS);
+    column-gap: 1em;
+  }
+
+  .table-heading div {
+    font-size: 0.8rem;
+  }
+
+  .list-container details {
+    padding: 0.5rem 3rem 0.5rem 1rem;
+  }
+
+  .list-container details > summary {
+    grid-template-columns: var(--GTC-XS);
+    column-gap: 1em;
+  }
+
+  .list-container details > summary .info img {
+    height: 25px;
+    width: 25px;
+  }
+
+  .list-container details > summary .info h2 {
+    font-size: 0.8rem;
+  }
+
+  .list-container details > summary .pl {
+    font-size: 0.8rem;
+  }
+
+  .list-container details > summary::after {
+    font-size: 1rem;
+  }
+}
