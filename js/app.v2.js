@@ -39,7 +39,24 @@ window.addEventListener("load", async () => {
     const resp = await req.json();
     if (resp.status) {
       const { coins, total, overview } = resp.data;
+      coins.sort((c1, c2) => c2.value - c1.value);
+
       // setting up hero pie chart
+      const pieChartData = [];
+      for (let i = 0; i < 4; i++) {
+        if (i < 3) pieChartData.push(coins[i]);
+        else if (!pieChartData[i]) {
+          pieChartData.push({
+            info: {
+              name: "Others",
+              color: "187, 239, 255",
+            },
+            value: coins[i].value,
+          });
+        } else {
+          pieChartData[3].value += coins[i].value;
+        }
+      }
       const heroCanvasEl = document.getElementById("hero-chart");
       const hoverEl = document.getElementById("hover");
       if (heroCanvasEl) {
@@ -48,7 +65,7 @@ window.addEventListener("load", async () => {
             type: "bar",
             data: {
               labels: [""],
-              datasets: coins.map((c) => ({
+              datasets: pieChartData.map((c) => ({
                 label: c.info.name,
                 data: [c.value / overview.value],
                 backgroundColor: [`rgb(${c.info.color})`],
@@ -118,13 +135,15 @@ window.addEventListener("load", async () => {
           new Chart(heroCanvasEl, {
             type: "doughnut",
             data: {
-              labels: coins.map((c) => c.info.name),
+              labels: pieChartData.map((c) => c.info.name),
               datasets: [
                 {
                   label: "% of Portfolio",
-                  data: coins.map((c) => c.value / overview.value),
-                  backgroundColor: coins.map((c) => `rgb(${c.info.color})`),
-                  borderColor: coins.map((c) => `rgb(${c.info.color})`),
+                  data: pieChartData.map((c) => c.value / overview.value),
+                  backgroundColor: pieChartData.map(
+                    (c) => `rgb(${c.info.color})`
+                  ),
+                  borderColor: pieChartData.map((c) => `rgb(${c.info.color})`),
                   // hoverBackgroundColor: "red",
                   hoverBorderWidth: 10,
                   borderWidth: 0,
@@ -143,8 +162,8 @@ window.addEventListener("load", async () => {
                   if (b.length) {
                     hoverEl.classList.add("show");
                     const index = b[0].index;
-                    hoverEl.textContent = coins[index].info.name;
-                    hoverEl.style.backgroundColor = `rgba(${coins[index].info.color}, 0.5)`;
+                    hoverEl.textContent = pieChartData[index].info.name;
+                    hoverEl.style.backgroundColor = `rgba(${pieChartData[index].info.color}, 0.5)`;
                     return;
                   }
                   hoverEl.classList.remove("show");
@@ -197,8 +216,9 @@ window.addEventListener("load", async () => {
           });
         }
       }
+
       // displaying top performing coins
-      const coinsContainer = document.querySelector(".section .coins");
+      const coinsContainer = document.querySelector(".p-section .coins");
       if (coinsContainer) {
         coins.sort((c1, c2) => c2.profit - c1.profit);
         const topCoins = coins.slice(0, 5);
@@ -212,7 +232,12 @@ window.addEventListener("load", async () => {
           coinsContainer.appendChild(coinEl);
         }
       }
+
       // setting up individual coin's chart
+      const headingEl = document.querySelector(".p-heading");
+      if (headingEl && window.innerWidth < 844) {
+        headingEl.textContent = "% of portfolio";
+      }
       const listEl = document.getElementById("portfolio");
       if (listEl) {
         for (const coinData of coins) {
@@ -256,6 +281,7 @@ window.addEventListener("load", async () => {
                   type: "bar",
                   data: {
                     labels: coinData.data.map((d) => parseDate(d.time)),
+                    // labels: coinData.data.map((d) => d.time),
                     datasets: [
                       {
                         label: "Percent. of portfolio",
@@ -292,7 +318,17 @@ window.addEventListener("load", async () => {
                         stacked: true,
                         ticks: {
                           color: "rgba(47, 64, 243, 0.7)",
-                          // display: false,
+                          display: true,
+                          major: true,
+                          // callback: function (value, index) {
+                          //   if (index % 3 === 0) {
+                          //     return parseDate(coinData.data[index].time);
+                          //   }
+                          //   return "";
+                          // },
+                          autoSkip: true,
+                          sampleSize: 60,
+                          maxRotation: 0,
                         },
                         font: {
                           size: 10,
@@ -319,8 +355,25 @@ window.addEventListener("load", async () => {
                         borderSkipped: false,
                       },
                     },
-                    aspectRatio: 5,
+                    plugins: {
+                      legend: {
+                        position: "bottom",
+                      },
+                    },
+                    aspectRatio:
+                      window.innerWidth < 844
+                        ? window.innerWidth / 200
+                        : 1036 / 350,
                   },
+                  plugins: [
+                    {
+                      beforeInit: function (chart, options) {
+                        chart.legend.afterFit = function () {
+                          this.height = this.height + 100;
+                        };
+                      },
+                    },
+                  ],
                 });
               }
             }
