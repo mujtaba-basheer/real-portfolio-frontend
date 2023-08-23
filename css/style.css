@@ -133,6 +133,10 @@ body {
   position: relative;
 }
 
+.list-container details > summary::-webkit-details-marker {
+  display: none;
+}
+
 .list-container details > summary::after {
   content: "+";
   display: block;
@@ -361,5 +365,9 @@ body {
 
   .list-container details > summary::after {
     font-size: 1rem;
+  }
+
+  .list-container details > .charts-container {
+    width: calc(100% + 2em);
   }
 }
