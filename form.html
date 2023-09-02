@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/form.css">
+  <title>Add Transaction</title>
+</head>
+
+<body>
+  <div class="t-container">
+    <form class="t-form" id="t-form">
+      <div class="t-field">
+        <label for="coin">Coin</label>
+        <select name="coin" id="coin" class="t-select" required>
+          <option value="" selected disabled>Select a coin</option>
+        </select>
+      </div>
+      <div class="t-field">
+        <label for="date">Date</label>
+        <input type="date" name="date" id="date" required>
+      </div>
+      <div class="t-field">
+        <label for="qty">Quantity</label>
+        <input type="number" name="qty" id="qty" step="0.00000000001" required>
+      </div>
+      <div class="t-field">
+        <label for="price">Price</label>
+        <input type="number" name="price" id="price" step="0.00000000001" required>
+      </div>
+      <div class="t-submit">
+        <input type="submit" value="Submit">
+      </div>
+    </form>
+  </div>
+
+  <script src="js/form.js"></script>
+</body>
+
+</html>
