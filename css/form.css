@@ -10,5 +10,47 @@
 
 body {
   box-sizing: border-box;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Poppins", sans-serif;
+}
+
+.t-container {
+  padding: 2em;
+  outline: 1px solid black;
+  width: min(90vw, 600px);
+  margin: 0 auto;
+}
+.t-container .t-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2em;
+}
+.t-container .t-form .t-field {
+  border: 1px solid black;
+  padding: 0.75em;
+  border-radius: 5px;
+}
+.t-container .t-form .t-field label {
+  display: block;
+  margin-bottom: 0.75em;
+}
+.t-container .t-form .t-field input,
+select {
+  display: block;
+  width: 100%;
+  padding: 0.3em 0.5em;
+}
+.t-container .t-form .t-submit {
+  grid-column: 1 / 3;
+  text-align: center;
+}
+.t-container .t-form .t-submit input {
+  padding: 0.5em;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: 5px;
+  outline: none;
+  border: 2px solid black;
+  display: block;
+  width: 200px;
+  margin: 0 auto;
 }
