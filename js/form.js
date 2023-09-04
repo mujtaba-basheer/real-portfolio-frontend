@@ -17,6 +17,7 @@ window.addEventListener("load", async () => {
         }
         else
             throw new Error(fetchCoinsReq.statusText);
+        const formEl = document.getElementById("t-form");
         const selectEl = document.getElementById("coin");
         const dateEl = document.getElementById("date");
         const qtyEl = document.getElementById("qty");
@@ -28,25 +29,24 @@ window.addEventListener("load", async () => {
             optionEl.text = name;
             selectEl.appendChild(optionEl);
         });
+        formEl.reset();
         const formData = {
-            coin: selectEl.value,
-            date: dateEl.value.split("-").reverse().join("-"),
-            qty: qtyEl.valueAsNumber,
-            price: priceEl.valueAsNumber,
+            coin: "",
+            date: "",
+            qty: 0,
+            price: 0,
         };
         selectEl.addEventListener("input", () => (formData.coin = selectEl.value));
         [dateEl, qtyEl, priceEl].forEach((el) => {
             el.addEventListener("change", () => {
                 const { name: fieldName, type, value } = el;
-                const fieldValue = type === "date" ? value.split("-").reverse().join("-") : +value;
+                const fieldValue = type === "date" ? value : +value;
                 formData[fieldName] = fieldValue;
             });
         });
-        const formEl = document.getElementById("t-form");
         formEl.addEventListener("submit", async (ev) => {
             try {
                 ev.preventDefault();
-                console.log(formData);
                 const tReq = await fetch(`${baseUrl}/api/transaction`, {
                     method: "POST",
                     headers: {
@@ -57,6 +57,10 @@ window.addEventListener("load", async () => {
                 const tResp = await tReq.json();
                 alert(tResp.msg);
                 formEl.reset();
+                formData.coin = "";
+                formData.date = "";
+                formData.qty = 0;
+                formData.price = 0;
             }
             catch (error) {
                 console.error(error);

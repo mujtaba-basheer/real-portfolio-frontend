@@ -38,6 +38,7 @@ window.addEventListener("load", async () => {
       else throw new Error(fetchCoinsResp.msg);
     } else throw new Error(fetchCoinsReq.statusText);
 
+    const formEl = document.getElementById("t-form") as HTMLFormElement;
     const selectEl = document.getElementById("coin") as HTMLSelectElement;
     const dateEl = document.getElementById("date") as HTMLInputElement;
     const qtyEl = document.getElementById("qty") as HTMLInputElement;
@@ -51,30 +52,27 @@ window.addEventListener("load", async () => {
       selectEl.appendChild(optionEl);
     });
 
+    formEl.reset();
     const formData: FormDataT = {
-      coin: selectEl.value,
-      date: dateEl.value.split("-").reverse().join("-"),
-      qty: qtyEl.valueAsNumber,
-      price: priceEl.valueAsNumber,
+      coin: "",
+      date: "",
+      qty: 0,
+      price: 0,
     };
 
     selectEl.addEventListener("input", () => (formData.coin = selectEl.value));
     [dateEl, qtyEl, priceEl].forEach((el) => {
       el.addEventListener("change", () => {
         const { name: fieldName, type, value } = el;
-        const fieldValue =
-          type === "date" ? value.split("-").reverse().join("-") : +value;
+        const fieldValue = type === "date" ? value : +value;
 
         formData[fieldName] = fieldValue;
       });
     });
 
-    const formEl = document.getElementById("t-form") as HTMLFormElement;
     formEl.addEventListener("submit", async (ev) => {
       try {
         ev.preventDefault();
-
-        console.log(formData);
 
         const tReq = await fetch(`${baseUrl}/api/transaction`, {
           method: "POST",
@@ -87,6 +85,10 @@ window.addEventListener("load", async () => {
         const tResp: Awaited<AddTransactionApiRespT> = await tReq.json();
         alert(tResp.msg);
         formEl.reset();
+        formData.coin = "";
+        formData.date = "";
+        formData.qty = 0;
+        formData.price = 0;
       } catch (error) {
         console.error(error);
       }
