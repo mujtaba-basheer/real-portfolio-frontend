@@ -55,14 +55,14 @@ const parseDate: (time: number) => string = (time) => {
     "Dec",
   ];
   const date = new Date(time);
-  // const month = MONTHS[date.getMonth()];
-  let month: string | number = date.getMonth() + 1;
-  if (month < 10) month = "0" + month;
+  const month = MONTHS[date.getMonth()];
+  // let month: string | number = date.getMonth() + 1;
+  // if (month < 10) month = "0" + month;
   let day: string | number = date.getUTCDate();
   if (day < 10) day = "0" + day;
   const year = date.getUTCFullYear();
 
-  return `${day}/${month}`;
+  return `${day} ${month}`;
 };
 const parsePercentage: (n: number) => string = (n) => {
   const formatter = new Intl.NumberFormat(undefined, {
@@ -74,7 +74,11 @@ const parsePercentage: (n: number) => string = (n) => {
 };
 
 window.addEventListener("load", async () => {
-  const baseUrl = "http://localhost:3000";
+  const sp = new URLSearchParams(window.location.search);
+  const isTesting = sp.get("testing") === "true";
+  const baseUrl = isTesting
+    ? "http://localhost:3000"
+    : "https://node.realacademy.io";
   const Chart = window.Chart;
 
   try {
@@ -171,7 +175,7 @@ window.addEventListener("load", async () => {
       }
 
       // displaying top performing coins
-      const coinsContainer = document.querySelector(".section .coins");
+      const coinsContainer = document.querySelector(".p-section .coins");
       if (coinsContainer) {
         coins.sort((c1, c2) => c2.profit - c1.profit);
         for (const coin of coins) {
@@ -255,8 +259,8 @@ window.addEventListener("load", async () => {
                           d.profit > 0 ? d.profit_percent : 0
                         ),
                         borderWidth: 1,
-                        backgroundColor: "rgba(26, 243, 114, 0.5)",
-                        borderColor: "rgba(26, 243, 114, 1)",
+                        backgroundColor: "rgba(43, 167, 0, 0.6)",
+                        borderColor: "rgba(43, 167, 0, 1)",
                       },
                       {
                         label: `Loss % on ${coinInfo.name}`,
@@ -275,6 +279,7 @@ window.addEventListener("load", async () => {
                         stacked: true,
                         ticks: {
                           color: "rgba(47, 64, 243, 0.7)",
+                          maxRotation: 0,
                           // display: false,
                         },
                         font: {
